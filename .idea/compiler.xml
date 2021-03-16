@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bookweb-web" />
+        <module name="bookweb-boot" />
+        <module name="bookweb-integration" />
+        <module name="bookweb-biz" />
+        <module name="bookweb-common" />
+        <module name="bookweb-dal" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

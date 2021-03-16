@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration status="INFO" monitorInterval="300">
+    <Properties>
+        <property name="logBasePath">${ctx:log.root}</property>
+        <property name="console_log_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%X{LOGGER_MODULE}][%X{LOGGER_CATEGORY}][%X{LOGGER_SUBCATEGORY}][%X{LOGGER_FILTER1}][%X{LOGGER_FILTER2}]%m%n</property>
+        <property name="log_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%X{LOGGER_MODULE}][%X{LOGGER_CATEGORY}][%X{LOGGER_SUBCATEGORY}][%X{LOGGER_FILTER1}][%X{LOGGER_FILTER2}]%m%n</property>
+        <property name="output_log_level">DEBUG</property>
+        <property name="console_print_level">DEBUG</property>
+    </Properties>
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${console_log_pattern}"/>
+        </Console>
+        <RollingFile name="ERROR-APPENDER" fileName="${logBasePath}/logs/common-error.log" filePattern="${logBasePath}/logs/common-error-%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logBasePath}/logs">
+                    <IfFileName glob="common-error*.log"/>
+                    <IfLastModified age="60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="DEFAULT-APPENDER" fileName="${logBasePath}/logs/common-default.log" filePattern="${logBasePath}/logs/common-default-%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logBasePath}/logs">
+                    <IfFileName glob="common-default*.log"/>
+                    <IfLastModified age="60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="APP-DEFAULT-APPENDER" fileName="${logBasePath}/logs/dataCenter.log" filePattern="${logBasePath}/logs/dataCenter-%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logBasePath}/logs">
+                    <IfFileName glob="dataCenter*.log"/>
+                    <IfLastModified age="60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="SOF-DEFAULT-APPENDER" fileName="${logBasePath}/logs/sof-default.log" filePattern="${logBasePath}/logs/sof-default-%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logBasePath}/logs">
+                    <IfFileName glob="sof-default*.log"/>
+                    <IfLastModified age="60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="DUBBO-APPENDER" fileName="${logBasePath}/logs/dubbo.log" filePattern="${logBasePath}/logs/dubbo-%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logBasePath}/logs">
+                    <IfFileName glob="dubbo*.log"/>
+                    <IfLastModified age="60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile name="JVM-MONITOR-DIGEST-APPENDER" fileName="${logBasePath}/logs/jvm-monitor-digest.log" filePattern="${logBasePath}/logs/jvm-monitor-digest-%d{yyyy-MM-dd}.log" append="true">
+            <PatternLayout pattern="${log_pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${logBasePath}/logs">
+                    <IfFileName glob="jvm-monitor-digest*.log"/>
+                    <IfLastModified age="60d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <AsyncLogger name="STDOUT" level="INFO" additivity="false">
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="STDERR" level="ERROR" additivity="false">
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.ly.sof" level="INFO" additivity="false">
+            <appender-ref ref="SOF-DEFAULT-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="org.springframework" level="WARN" additivity="true">
+            <appender-ref ref="SOF-DEFAULT-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.alibaba.dubbo" level="INFO" additivity="false">
+            <appender-ref ref="DUBBO-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.alibaba.dubbo.rpc.protocol.rest.support" level="WARN" additivity="false">
+            <appender-ref ref="DUBBO-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="java.sql" level="ERROR" additivity="false">
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="dbcfg" level="ERROR" additivity="false">
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.mybatis" level="WARN" additivity="true">
+            <appender-ref ref="SOF-DEFAULT-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="JVM-MONITOR-DIGEST-LOGGER" level="INFO" additivity="false">
+            <appender-ref ref="JVM-MONITOR-DIGEST-APPENDER"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.ly.flight.airtravel" level="INFO" additivity="false">
+            <appender-ref ref="APP-DEFAULT-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.ly.dal.cfgcenter.DelegatingWSClient" level="WARN" additivity="false">
+            <appender-ref ref="DUBBO-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.alibaba.dubbo.common.serialize.support.kryo.CompatibleKryo" level="ERROR" additivity="false">
+            <appender-ref ref="DUBBO-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.alibaba.dubbo.registry.tcdsf.ControlCenterClient" level="WARN" additivity="false">
+            <appender-ref ref="DUBBO-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.alibaba.dubbo.registry.tcdsf.TcDsfRegistry" level="WARN" additivity="false">
+            <appender-ref ref="DUBBO-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="com.ly.tcbase.core.log.ComponentLog" level="WARN" additivity="false">
+            <appender-ref ref="DUBBO-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <AsyncLogger name="RocketmqClient" level="ERROR" additivity="true">
+            <appender-ref ref="SOF-DEFAULT-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </AsyncLogger>
+        <root level="INFO">
+            <appender-ref ref="DEFAULT-APPENDER"/>
+            <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="Console"/>
+        </root>
+    </loggers>
+</configuration>
