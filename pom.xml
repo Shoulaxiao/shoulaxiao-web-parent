@@ -10,9 +10,9 @@
     <modules>
         <module>app/biz</module>
         <module>app/common</module>
-        <module>app/dal</module>
         <module>app/integration</module>
         <module>app/web</module>
+        <module>app/dal</module>
         <module>boot</module>
     </modules>
 
@@ -56,50 +56,50 @@
 
         <aspectjweaver.version>1.8.13</aspectjweaver.version>
         <aspectjrt.version>1.8.9</aspectjrt.version>
+        <shardingsphere.version>5.0.0</shardingsphere.version>
 
-        <mybatis-plus.version>2.2.0</mybatis-plus.version>
+        <mybatis-plus.version>3.4.1</mybatis-plus.version>
+        <mysql-connect.version>8.0.21</mysql-connect.version>
     </properties>
 
 
     <dependencyManagement>
         <dependencies>
-        <dependency>
-            <groupId>com.shoulaxiao.bookstore</groupId>
-            <artifactId>bookweb-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.shoulaxiao.bookstore</groupId>
-            <artifactId>bookweb-biz</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.shoulaxiao.bookstore</groupId>
-            <artifactId>bookweb-integration</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.shoulaxiao.bookstore</groupId>
-            <artifactId>bookweb-dal</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.shoulaxiao.bookstore</groupId>
-            <artifactId>bookweb-web</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.shoulaxiao.bookstore</groupId>
-            <artifactId>bookweb-boot</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.shoulaxiao.bookstore</groupId>
+                <artifactId>bookweb-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shoulaxiao.bookstore</groupId>
+                <artifactId>bookweb-biz</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shoulaxiao.bookstore</groupId>
+                <artifactId>bookweb-integration</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shoulaxiao.bookstore</groupId>
+                <artifactId>bookweb-dal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shoulaxiao.bookstore</groupId>
+                <artifactId>bookweb-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.shoulaxiao.bookstore</groupId>
+                <artifactId>bookweb-boot</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-
-
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-jdk8</artifactId>
@@ -128,6 +128,11 @@
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
@@ -148,6 +153,11 @@
                 <version>${jjwt.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connect.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
             <dependency>
                 <groupId>org.aspectj</groupId>
@@ -160,11 +170,34 @@
                 <artifactId>aspectjrt</artifactId>
                 <version>${aspectjrt.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core</artifactId>
+                <version>${shardingsphere.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -178,7 +211,10 @@
             <artifactId>guava</artifactId>
         </dependency>
         <dependency>
-
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
             <exclusions>
@@ -215,6 +251,11 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>3.4.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
@@ -244,7 +285,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-
+        <!-- 引入第三方数据源 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.6</version>
+        </dependency>
         <dependency>
             <groupId>com.github.jsqlparser</groupId>
             <artifactId>jsqlparser</artifactId>
